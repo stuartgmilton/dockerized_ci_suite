@@ -1,0 +1,26 @@
+---
+
+ - name: pull
+   docker_image:
+     name: sonatype/nexus3
+
+ - name: Create dir
+   file:
+     path: /nexus-data
+     state: directory
+     recurse: yes
+     mode: 200
+
+ - name: Start nexus docker container
+   docker_container:
+     name: "nexus3"
+     image: "sonatype/nexus3"
+     restart_policy: always
+     ports:
+       - "8081:8081"
+       - "5000:5000"
+     volumes: 
+       - /nexus-data:/nexus-data
+
+...
+
