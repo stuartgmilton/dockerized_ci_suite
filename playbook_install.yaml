@@ -1,0 +1,40 @@
+---
+
+ - hosts: all
+   become: true
+
+   roles:
+   - role: ci_network
+   - role: nexus
+   - role: jenkins
+   - role: oracle
+   - role: postgresql
+   - role: sonarqube
+
+# create network but only if defined (oid)
+# add nexus to network oid
+# create jenkins and add to network
+# create sonarqube & mariadb and add to network
+
+# login to dockerhub
+# pull oracle image
+# build oracle image again
+# push oracle image to nexus
+# run oracle container - volume?
+# run sql command against DB Server
+# 
+
+#{
+#"name": "docker1",
+#"type": "groovy",
+#"content": "import org.sonatype.nexus.repository.Repository; import org.sonatype.nexus.repository.storage.WritePolicy; blobStore.createFileBlobStore('dockerblob', 'dockerblob'); repository.createDockerHosted('docker-production', 5000, 5001, 'dockerblob', true, true, WritePolicy.ALLOW_ONCE)"
+#}
+
+# curl -v -X POST -u admin:admin123 --header "Content-Type: application/json" 'http://localhost:8081/service/rest/v1/script' -d @docker1.json
+
+# curl -X POST -u admin:admin123 --header "Content-Type: text/plain" 'http://localhost:8081/service/rest/v1/script/docker1/run'
+
+
+
+
+...

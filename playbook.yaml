@@ -4,8 +4,20 @@
    become: true
 
    roles:
+   - role: ci_network
    - role: nexus
+   - role: jenkins
+   - role: oracle
+   - role: postgresql
+   - role: sonarqube
 
+# create network but only if defined (oid)
+# add nexus to network oid
+# create jenkins and add to network
+# create sonarqube & mariadb and add to network
+
+# login to dockerhub
+# pull oracle image
 # build oracle image again
 # push oracle image to nexus
 # run oracle container - volume?

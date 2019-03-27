@@ -9,7 +9,7 @@
      path: /nexus-data
      state: directory
      recurse: yes
-     mode: 200
+     owner: 200
 
  - name: Start nexus docker container
    docker_container:

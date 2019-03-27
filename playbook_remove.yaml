@@ -1,0 +1,55 @@
+---
+
+ - hosts: all
+   become: true
+
+   tasks:
+   - name: Stop all containers
+     docker_container:
+       name: "{{ item }}"
+       state: stopped
+     with_items:
+       - nexus3
+       - jenkins
+       - oracle12ee
+       - sonarqube
+       - postgres
+
+   - name: Remove all containers
+     docker_container:
+       name: "{{ item }}"
+       state: absent
+     with_items:
+       - nexus3
+       - jenkins
+       - oracle12ee
+       - sonarqube
+       - postgres
+
+   - name: Remove all file system mounts
+     file:
+       path: "{{item}}"
+       state: absent
+     with_items:
+       - /docker_sonarqube
+       - /jenkins_home
+       - /nexus-data
+       - /oracle-data
+       - /postgres-data
+
+
+
+# create network but only if defined (oid)
+# add nexus to network oid
+# create jenkins and add to network
+# create sonarqube & mariadb and add to network
+
+# login to dockerhub
+# pull oracle image
+# build oracle image again
+# push oracle image to nexus
+# run oracle container - volume?
+# run sql command against DB Server
+# 
+
+...

@@ -1,0 +1,43 @@
+---
+
+ - name: pull
+   docker_image:
+     name:  postgres
+
+ - name: create postgres group
+   group:
+     name: postgres
+     gid: 1000
+     state: present
+
+ - name: create postgres user
+   user:
+     name: postgres
+     uid: 1000
+     state: present
+
+ - name: Create dir
+   file:
+     path: /postgres-data
+     state: directory
+     recurse: yes
+     owner: postgres
+     group: postgres
+
+ - name: Start postgres docker container
+   docker_container:
+     name: "postgres"
+     image: "postgres"
+     restart_policy: always
+     ports:
+       - "5432:5432"
+     volumes: 
+       - /postgres-data:/var/lib/postgresql/data
+     networks:
+       - name: ci_network
+     env:
+       POSTGRES_USER: "sonar"
+       POSTGRES_PASSWORD: "sonar"
+
+...
+

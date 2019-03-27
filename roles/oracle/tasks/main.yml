@@ -1,0 +1,31 @@
+---
+
+ - name: Login to Docker Hub
+   docker_login:
+     username: "{{ docker_repo_username }}"
+     password: "{{ docker_repo_password }}" 
+
+ - name: pull
+   docker_image:
+     name: store/oracle/database-enterprise:12.2.0.1
+
+ - name: Create dir
+   file:
+     path: /oracle-data
+     state: directory
+     recurse: yes
+     owner: 54321
+
+ - name: Start oracle docker container
+   docker_container:
+     name: "oracle12ee"
+     image: "store/oracle/database-enterprise:12.2.0.1"
+     restart_policy: always
+     ports:
+       - "1521:1521"
+       - "5500:5500"
+     volumes: 
+       - /oracle-data:/ORCL
+
+...
+

@@ -1,0 +1,26 @@
+---
+
+ - name: pull
+   docker_image:
+     name: jenkins 
+
+ - name: Create dir
+   file:
+     path: /jenkins_home
+     state: directory
+     recurse: yes
+     owner: 1000
+
+ - name: Start jenkins docker container
+   docker_container:
+     name: "jenkins"
+     image: "jenkins"
+     restart_policy: always
+     ports:
+       - "8080:8080"
+       - "50000:50000"
+     volumes: 
+       - /jenkins_home:/var/jenkins_home
+
+...
+
