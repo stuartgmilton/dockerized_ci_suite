@@ -3,6 +3,7 @@
  - name: pull
    docker_image:
      name:  sonarqube
+     http_timeout: 15
 
  - name: Create dir
    file:
@@ -23,6 +24,7 @@
      dest: /docker_sonarqube/extensions/plugins/sonar-plsql-open-plugin-2.2.0.jar
      owner: 999
      group: 999
+     timeout: 15
 
  - name: Start sonarqube docker container
    docker_container:
