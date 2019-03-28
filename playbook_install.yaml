@@ -3,17 +3,17 @@
  - hosts: all
    become: true
 
-   environment:
-     http_proxy: http://127.0.0.1:3128
-     https_proxy: http://127.0.0.1:3128
+#   environment:
+#     http_proxy: http://127.0.0.1:3128
+#     https_proxy: http://127.0.0.1:3128
 
    roles:
    - role: ci_network
    - role: nexus
-   - role: jenkins
-   - role: oracle
-   - role: postgresql
-   - role: sonarqube
+#   - role: jenkins
+#   - role: oracle
+#   - role: postgresql
+#   - role: sonarqube
 
 # create network but only if defined (oid)
 # add nexus to network oid

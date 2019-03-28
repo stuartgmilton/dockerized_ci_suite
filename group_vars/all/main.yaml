@@ -1,0 +1,8 @@
+---
+
+ docker_networks:
+   - "ci_network"
+
+ nexus_image_name: "sonatype/nexus3"
+
+...

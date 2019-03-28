@@ -2,25 +2,34 @@
 
  - name: pull
    docker_image:
-     name: sonatype/nexus3
+     name: "{{nexus_image_name}}"
 
- - name: Create dir
+ - name: Ensure System Mounts Directory exists
    file:
-     path: /nexus-data
+     path: /docker_mounts
+     state: directory
+     recurse: yes
+     mode: 666
+
+ - name: Ensure Nexus bind mount directories exist
+   file:
+     path: "{{ item }}"
      state: directory
      recurse: yes
      owner: 200
+   with_items:
+     - /docker_mounts/nexus-data
 
  - name: Start nexus docker container
    docker_container:
      name: "nexus3"
-     image: "sonatype/nexus3"
+     image: "{{nexus_image_name}}"
      restart_policy: always
      ports:
        - "8081:8081"
        - "5000:5000"
      volumes: 
-       - /nexus-data:/nexus-data
+       - /docker_mounts/nexus-data:/nexus-data
 
 ...
 

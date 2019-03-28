@@ -2,7 +2,9 @@
 
  - name: create
    docker_network:
-     name: ci_network
+     name: "{{ item }}"
+   with_items:
+     - "{{ docker_networks }}"
 
 ...
 
