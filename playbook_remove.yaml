@@ -2,45 +2,47 @@
 
 # This is terrible and should be re-written when Ansible 2.8 is released
 # Ansible 2.8 includes a number of additional docker facts modules
-#
+
  - hosts: all
    become: true
 
    tasks:
-   - name: count containers
-     shell: docker ps | awk 'NR>1' | wc -l
-     register: container_count
+#   - name: Count Running Containers
+#     shell: docker ps | awk 'NR>1' | wc -l
+#     register: container_count
 
-   - name: count images
-     shell: docker images | awk 'NR>1' | wc -l
-     register: image_count
+#   - name: Count available Images
+#     shell: docker images | awk 'NR>1' | wc -l
+#     register: image_count
 
-   - name: stop any running docker containers
-     shell: docker stop $(docker ps -a -q)
-     when: container_count | int > 0
+#   - name: Stop all running docker containers
+#     shell: docker stop $(docker ps -a -q)
+#     when: container_count.stdout | int > 0
 
-   - name: remove any existing docker containers
-     shell: docker rm $(docker ps -a -q)
-     when: container_count | int > 0
+#   - name: Remove all docker containers
+#     shell: docker rm $(docker ps -a -q)
+#     when: container_count.stdout | int > 0
 
-   - name: remove all docker images
-     shell: docker rmi $(docker images -q)
-     when: image_count | int > 0
+#   - name: Remove all docker images
+#     shell: docker rmi $(docker images -q)
+#     when: image_count.stdout | int > 0
 
 
-   - name: check if network exists
-     shell: docker network ls -f name=ci_network | awk 'NR>1' | wc -l
-     register: network_count
+   - name: Get a list of all docker networks
+     shell: docker network ls | awk 'NR>1' | awk '{ print $2 }'
+     register: all_networks
 
-   - name:
-     shell: docker network rm ci_network
-     when: network_count | int > 0
+   - name: Delete our networks
+     shell: "docker network rm {{item}}"
+     when: item in docker_networks
+     with_items:
+       - "{{all_networks.stdout_lines}}" 
 
    - name: Remove all file system mounts
      file:
        path: "{{item}}"
        state: absent
      with_items:
-       - /docker_mounts
+       - "{{all_file_system_mounts}}"
 
 ...

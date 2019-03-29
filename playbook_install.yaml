@@ -8,16 +8,13 @@
      https_proxy: http://127.0.0.1:3128
 
    roles:
-   - role: ci_network
+   - role: create_docker_network
    - role: nexus
    - role: jenkins
    - role: oracle
    - role: postgresql
    - role: sonarqube
 
-# fix remove script
-# rename netork role 'create_docker_network'
-# pass network a list
 # create nexus and add to network if defined
 # create jenkins and add to network if defined
 # create sonarqube & postgres and add to network if defined

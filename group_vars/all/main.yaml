@@ -5,4 +5,29 @@
 
  nexus_image_name: "sonatype/nexus3"
 
+ jenkins_mounts:
+   - /jenkins_home
+
+ nexus_mounts:
+   - /nexus-data
+
+ sonarqube_mounts:
+   - /sonarqube/conf
+   - /sonarqube/data
+   - /sonarqube/logs
+   - /sonarqube/extensions/plugins
+
+ oracle_mounts:
+   - /oracle_data
+
+ postgres_mounts:
+   - /postgres-data
+
+ all_file_system_mounts:
+   - "{{jenkins_mounts}}"
+   - "{{nexus_mounts}}"
+   - "{{nexus_mounts}}"
+   - "{{oracle_mounts}}"
+   - "{{postgres_mounts}}"
+
 ...
