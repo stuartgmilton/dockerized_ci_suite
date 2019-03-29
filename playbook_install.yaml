@@ -3,30 +3,34 @@
  - hosts: all
    become: true
 
-#   environment:
-#     http_proxy: http://127.0.0.1:3128
-#     https_proxy: http://127.0.0.1:3128
+   environment:
+     http_proxy: http://127.0.0.1:3128
+     https_proxy: http://127.0.0.1:3128
 
    roles:
    - role: ci_network
    - role: nexus
-#   - role: jenkins
-#   - role: oracle
-#   - role: postgresql
-#   - role: sonarqube
+   - role: jenkins
+   - role: oracle
+   - role: postgresql
+   - role: sonarqube
 
-# create network but only if defined (oid)
-# add nexus to network oid
-# create jenkins and add to network
-# create sonarqube & mariadb and add to network
+# fix remove script
+# rename netork role 'create_docker_network'
+# pass network a list
+# create nexus and add to network if defined
+# create jenkins and add to network if defined
+# create sonarqube & postgres and add to network if defined
+# create oracle image and add to network if defined
+# change jenkins initial password
+# Create manual jenkins job to confirm that jenkins can talk to sonarqube / nexus / oracle
 
-# login to dockerhub
-# pull oracle image
-# build oracle image again
-# push oracle image to nexus
-# run oracle container - volume?
-# run sql command against DB Server
-# 
+# create jenkins job via curl/rest api - Job should be a jobdsl job that literally uses a jenkinsfile from a github repo
+# run Jenkins job manually 
+# run jenkins job automatically on commit
+
+# Talend??
+
 
 #{
 #"name": "docker1",

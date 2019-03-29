@@ -1,55 +1,46 @@
 ---
 
+# This is terrible and should be re-written when Ansible 2.8 is released
+# Ansible 2.8 includes a number of additional docker facts modules
+#
  - hosts: all
    become: true
 
    tasks:
-   - name: Stop all containers
-     docker_container:
-       name: "{{ item }}"
-       state: stopped
-     with_items:
-       - nexus3
-       - jenkins
-       - oracle12ee
-       - sonarqube
-       - postgres
+   - name: count containers
+     shell: docker ps | awk 'NR>1' | wc -l
+     register: container_count
 
-   - name: Remove all containers
-     docker_container:
-       name: "{{ item }}"
-       state: absent
-     with_items:
-       - nexus3
-       - jenkins
-       - oracle12ee
-       - sonarqube
-       - postgres
+   - name: count images
+     shell: docker images | awk 'NR>1' | wc -l
+     register: image_count
+
+   - name: stop any running docker containers
+     shell: docker stop $(docker ps -a -q)
+     when: container_count | int > 0
+
+   - name: remove any existing docker containers
+     shell: docker rm $(docker ps -a -q)
+     when: container_count | int > 0
+
+   - name: remove all docker images
+     shell: docker rmi $(docker images -q)
+     when: image_count | int > 0
+
+
+   - name: check if network exists
+     shell: docker network ls -f name=ci_network | awk 'NR>1' | wc -l
+     register: network_count
+
+   - name:
+     shell: docker network rm ci_network
+     when: network_count | int > 0
 
    - name: Remove all file system mounts
      file:
        path: "{{item}}"
        state: absent
      with_items:
-       - /docker_sonarqube
-       - /jenkins_home
-       - /nexus-data
-       - /oracle-data
-       - /postgres-data
-
-
-
-# create network but only if defined (oid)
-# add nexus to network oid
-# create jenkins and add to network
-# create sonarqube & mariadb and add to network
-
-# login to dockerhub
-# pull oracle image
-# build oracle image again
-# push oracle image to nexus
-# run oracle container - volume?
-# run sql command against DB Server
-# 
+       - /docker_mounts
 
 ...

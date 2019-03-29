@@ -4,25 +4,25 @@
    docker_image:
      name:  postgres
 
- - name: create postgres group
-   group:
-     name: postgres
-     gid: 1000
-     state: present
-
- - name: create postgres user
-   user:
-     name: postgres
-     uid: 1000
-     state: present
+# - name: create postgres group
+#   group:
+#     name: postgres
+#     gid: 1000
+#     state: present
+#
+# - name: create postgres user
+#   user:
+#     name: postgres
+#     uid: 1000
+#     state: present
 
  - name: Create dir
    file:
      path: /postgres-data
      state: directory
      recurse: yes
-     owner: postgres
-     group: postgres
+     owner: 1000
+ #    group: postgres
 
  - name: Start postgres docker container
    docker_container:
