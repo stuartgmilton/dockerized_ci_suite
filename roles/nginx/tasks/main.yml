@@ -1,0 +1,43 @@
+---
+
+ - name: pull
+   docker_image:
+     name: nginx
+
+ - name: Ensure bind mount directories exist
+   file:
+     path: "/nginx{{ item }}"
+     state: directory
+   with_items:
+     - 1
+     - 2
+
+ - name: template in conf file
+   template:
+     src: templates/httpd.conf.j2
+     dest: /nginx{{item}}/nginx.conf
+   with_items:
+     - 1
+     - 2
+
+ - name: Start nginx docker container
+   docker_container:
+     name: "nginx{{item}}"
+     image: nginx
+     restart_policy: always
+     restart: yes
+     ports:
+       - "1008{{item}}:80"
+     volumes: 
+       - "/nginx{{item}}/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+     networks:
+   #    - name: "zone{{item}}"
+       - name: all
+   with_items:
+     - 1
+     - 2
+
+
+
+...
+

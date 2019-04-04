@@ -1,0 +1,16 @@
+<HEAD>
+<TITLE>HTTPD{{item}}</TITLE>
+HTTPD{{item}}<BR>
+upstream httpd {<BR>
+server httpd{{(2*item)-1}}:808{{(2*item)-1}};<BR>
+server httpd{{item*2}}:808{{item*2}};<BR>
+}<BR><BR>
+
+server {<BR>
+listen 1008{{item}};<BR>
+location / {<BR>
+    proxy_pass http://httpd;<BR>
+}<BR>
+}<BR>
+
+</HEAD>
