@@ -1,0 +1,39 @@
+---
+
+ - name: set firewall | install firewalld
+   when: (firewall_ports is defined)
+   block:
+   - yum:
+       name:
+       - firewalld
+       state: latest
+
+   - systemd:
+       name: firewalld
+       enabled: true
+       state: started
+
+ - name: set firewall | configure firewall services
+   when: (item.service is defined)
+   firewalld:
+     service: "{{item.service}}"
+     source: "{{item.srcip|default(omit)}}"
+     zone: "{{firewall_zone|default(omit)}}"
+     permanent: true
+     immediate: true
+     state: "{{item.state}}"
+   with_items: "{{firewall_ports}}"
+
+ - name: set firewall | configure firewall ports
+   when: (item.port is defined)
+   firewalld:
+     port: "{{item.port}}/{{item.proto}}"
+     source: "{{item.srcip|default(omit)}}"
+     zone: "{{firewall_zone|default(omit)}}"
+     permanent: true
+     immediate: true
+     state: "{{item.state}}"
+   with_items: "{{firewall_ports}}"
+
+...
+
