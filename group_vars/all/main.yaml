@@ -1,27 +1,42 @@
 ---
 
  docker_networks:
-   - "ci_network"
+   - "ci_suite_network"
+
+ firewall_ports:
+   - { service: ssh, state: enabled }
+   - { service: http, state: enabled }
+   - { service: https, state: enabled }
+   - { port: 8080,  proto: tcp, state: enabled }
+   - { port: 8081,  proto: tcp, state: enabled }
+   - { port: 9000,  proto: tcp, state: enabled }
+   - { port: 18080,  proto: tcp, state: enabled }
+   - { port: 18081,  proto: tcp, state: enabled }
+   - { port: 19000,  proto: tcp, state: enabled }
 
  nexus_image_name: "sonatype/nexus3"
 
  jenkins_mounts:
-   - /jenkins_home
+   - /docker-data-jenkins
 
  nexus_mounts:
-   - /nexus-data
+   - {host_dir: /docker-data-nexus, container_dir: /nexus-data}
+
+ nexus_port_mappings:
+   - {host_port: 8081, container_port: 8081}
+   - {host_port: 5000, container_port: 5000}
 
  sonarqube_mounts:
-   - /sonarqube/conf
-   - /sonarqube/data
-   - /sonarqube/logs
-   - /sonarqube/extensions/plugins
+   - /docker-data-sonarqube/conf
+   - /docker-data-sonarqube/data
+   - /docker-data-sonarqube/logs
+   - /docker-data-sonarqube/extensions/plugins
 
  oracle_mounts:
-   - /oracle_data
+   - /docker-data-oracle
 
  postgres_mounts:
-   - /postgres-data
+   - /docker-data-postgres-data
 
  all_file_system_mounts:
    - "{{jenkins_mounts}}"

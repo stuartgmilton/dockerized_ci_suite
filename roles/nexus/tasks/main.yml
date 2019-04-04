@@ -6,23 +6,45 @@
 
  - name: Ensure Nexus bind mount directories exist
    file:
-     path: "{{ item }}"
+     path: "{{ item.host_dir }}"
      state: directory
      recurse: yes
      owner: 200
    with_items:
-     - /nexus-data
+     - "{{nexus_mounts}}"
+
+# - name: Start nexus docker container
+#   docker_container:
+#     name: "nexus3"
+#     image: "{{nexus_image_name}}"
+#     restart_policy: always
+#     restart: yes
+#     ports: 
+#       - "8081:8081"
+#       - "5000:5000"
+#     volumes: |
+#       {% for x in item.mounts %}
+#       - "{{x.host_dir}}:{{x.container_dir}}"
+#       {% endfor %} 
+#     #  - "{{item.mounts.host_dir}}:{{item.mounts.container_dir}}"
+#   with_items:
+#     - { mounts: "{{nexus_mounts}}" }
+#  #   - "{{nexus_mounts}}"
 
  - name: Start nexus docker container
    docker_container:
      name: "nexus3"
      image: "{{nexus_image_name}}"
      restart_policy: always
+     restart: yes
      ports:
        - "8081:8081"
        - "5000:5000"
-     volumes: 
-       - /nexus-data:/nexus-data
+     volumes:
+       - "{{item.host_dir}}:{{item.container_dir}}"
+   with_items:
+     - "{{nexus_mounts}}"
+
 
 ...
 
