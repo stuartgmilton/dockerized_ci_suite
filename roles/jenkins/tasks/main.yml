@@ -31,4 +31,3 @@
    with_items:
      - "{{ containers['jenkins'].mounts }}"
 ...
-
