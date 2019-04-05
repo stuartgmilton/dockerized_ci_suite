@@ -1,0 +1,18 @@
+server {
+  listen   *:{{ listening_port }};
+  server_name  {{ listening_dns }};
+  
+  {% for config in server_config %}
+  {{ config }}
+  {% endfor %}
+ 
+  location / {
+    proxy_pass http://{{ downstream_server_ip }}:{{ downstream_server_port }};
+
+    {% for config in location_config %}
+    {{ config }}
+    {% endfor %}
+
+  }
+}
+

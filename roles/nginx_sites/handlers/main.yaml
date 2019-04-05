@@ -1,0 +1,15 @@
+---
+
+# - name: reload nginx
+#   service:
+#     name: nginx
+#     state: reloaded
+
+ - name: reload nginx
+   docker_container:
+     name: nexus3
+     state: started
+     restart: yes
+
+...
+

@@ -1,0 +1,23 @@
+---
+
+
+
+ - name: debug config
+   debug:
+     var: "{{item}}"
+   with_items: "{{ nginx_site_config['jenkins']}}"
+
+# - fail:
+#     msg: "wotever"
+
+ - name: Add conf file to Proxy
+   template:
+     src: templates/site.conf.j2
+     dest: "/docker-data-nginx/conf.d/{{ application_name }}.conf"
+     owner: root
+     group: root
+     mode: '0600'
+   notify: reload nginx 
+
+...
+
