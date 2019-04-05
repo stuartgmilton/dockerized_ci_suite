@@ -14,29 +14,32 @@
    - { port: 18081,  proto: tcp, state: enabled }
    - { port: 19000,  proto: tcp, state: enabled }
 
+ containers:
+   nginx:
+     mounts:
+       - /docker-data-nginx/conf.d:/etc/nginx/conf.d
+     port_mappings:
+       - "80:80"
+       - "443:443"
+       - "18080:18080"
+       - "18081:18081"
+       - "19000:19000"
+   nexus:
+     mounts:
+       - /docker-data-nexus:/nexus-data
+     port_mappings:
+       - "8081:8081"
+       - "5000:5000"
+
+
+
  nginx_image_name: "nginx"
-
- nginx_mounts:
-   - {host_dir: /docker-data-nginx/conf.d, container_dir: /etc/nginx/conf.d}
-
- nginx_port_mappings:
-   - {host_port: 80, container_port: 80}
-   - {host_port: 443, container_port: 443}
-   - {host_port: 18080, container_port: 18080}
-   - {host_port: 18081, container_port: 18081}
-   - {host_port: 19000, container_port: 19000}
 
  nexus_image_name: "sonatype/nexus3"
 
  jenkins_mounts:
    - /docker-data-jenkins
 
- nexus_mounts:
-   - {host_dir: /docker-data-nexus, container_dir: /nexus-data}
-
- nexus_port_mappings:
-   - {host_port: 8081, container_port: 8081}
-   - {host_port: 5000, container_port: 5000}
 
  sonarqube_mounts:
    - /docker-data-sonarqube/conf
