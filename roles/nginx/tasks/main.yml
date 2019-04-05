@@ -2,42 +2,40 @@
 
  - name: pull
    docker_image:
-     name: nginx
+     name: "{{nginx_image_name}}"
 
  - name: Ensure bind mount directories exist
    file:
-     path: "/nginx{{ item }}"
+     path: "{{ item.host_dir }}"
      state: directory
    with_items:
-     - 1
-     - 2
+     - "{{nginx_mounts}}"
 
+# Access mount by name (conf)
  - name: template in conf file
    template:
-     src: templates/httpd.conf.j2
-     dest: /nginx{{item}}/nginx.conf
-   with_items:
-     - 1
-     - 2
+     src: templates/default.conf.j2
+     dest: /docker-data-nginx/conf.d/default.conf
 
+# Access network by name (ci)
  - name: Start nginx docker container
    docker_container:
-     name: "nginx{{item}}"
-     image: nginx
+     name: "nginx"
+     image: "{{nginx_image_name}}"
      restart_policy: always
      restart: yes
      ports:
-       - "1008{{item}}:80"
+       - "80:80"
+       - "443:443"
+       - "18080:18080"
+       - "18081:18081"
+       - "19000:19000"
      volumes: 
-       - "/nginx{{item}}/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+       - "{{item.host_dir}}:{{item.container_dir}}"
      networks:
-   #    - name: "zone{{item}}"
-       - name: all
+       - name: ci_suite_network 
    with_items:
-     - 1
-     - 2
-
-
+     - "{{ nginx_mounts }}"
 
 ...
 
