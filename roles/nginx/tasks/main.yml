@@ -6,10 +6,10 @@
 
  - name: Ensure bind mount directories exist
    file:
-     path: "{{ item.host_dir }}"
+     path: "{{ item.split(':')[0] }}"
      state: directory
    with_items:
-     - "{{nginx_mounts}}"
+     - "{{ containers['nginx'].mounts }}"
 
 # Access mount by name (conf)
  - name: template in conf file
@@ -21,21 +21,14 @@
  - name: Start nginx docker container
    docker_container:
      name: "nginx"
-     image: "{{nginx_image_name}}"
+     image: "{{ nginx_image_name }}"
      restart_policy: always
      restart: yes
-     ports:
-       - "80:80"
-       - "443:443"
-       - "18080:18080"
-       - "18081:18081"
-       - "19000:19000"
-     volumes: 
-       - "{{item.host_dir}}:{{item.container_dir}}"
+     ports: "{{ containers['nginx'].port_mappings }}"
+     volumes: "{{ containers['nginx'].mounts }}"
      networks:
        - name: ci_suite_network 
-   with_items:
-     - "{{ nginx_mounts }}"
+
 
 ...
 
