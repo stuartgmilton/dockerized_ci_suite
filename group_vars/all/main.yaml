@@ -44,8 +44,8 @@
  nexus_image_name: "sonatype/nexus3"
 
  jenkins_image_name: "jenkins/jenkins"
- jenkins_admin_username: "{{ jenkins_admin_username }}"
- jenkins_admin_password: "{{ jenkins_admin_password }}"
+ jenkins_admin_username: "{{ jenkins_username }}"
+ jenkins_admin_password: "{{ jenkins_password }}"
 
  sonarqube_mounts:
    - /docker-data-sonarqube/conf
