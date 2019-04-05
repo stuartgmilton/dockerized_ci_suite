@@ -30,12 +30,17 @@
      port_mappings:
        - "8081:8081"
        - "5000:5000"
-
+   oracle:
+     mounts:
+       - /docker-data-oracle:/ORCL
+     port_mappings:
+       - "1521:1521"
+       - "5500:5500"
 
 
  nginx_image_name: "nginx"
-
  nexus_image_name: "sonatype/nexus3"
+ oracle_image_name: "store/oracle/database-enterprise:12.2.0.1"
 
  jenkins_mounts:
    - /docker-data-jenkins
@@ -46,9 +51,6 @@
    - /docker-data-sonarqube/data
    - /docker-data-sonarqube/logs
    - /docker-data-sonarqube/extensions/plugins
-
- oracle_mounts:
-   - /docker-data-oracle
 
  postgres_mounts:
    - /docker-data-postgres-data
