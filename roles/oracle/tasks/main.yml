@@ -1,5 +1,6 @@
 ---
 
+# Should remove my personal details from here
  - name: Login to Docker Hub
    docker_login:
      username: "{{ docker_repo_username }}"
@@ -7,25 +8,24 @@
 
  - name: pull
    docker_image:
-     name: store/oracle/database-enterprise:12.2.0.1
+     name: "{{oracle_image_name}}"
 
- - name: Create dir
+ - name: Ensure bind mount directories exist
    file:
-     path: /oracle-data
+     path: "{{ item.split(':')[0] }}"
      state: directory
-     recurse: yes
+#     resurse: yes
      owner: 54321
+   with_items:
+     - "{{ containers['oracle'].mounts }}"
 
  - name: Start oracle docker container
    docker_container:
      name: "oracle12ee"
-     image: "store/oracle/database-enterprise:12.2.0.1"
+     image: "{{oracle_image_name}}" 
      restart_policy: always
-     ports:
-       - "1521:1521"
-       - "5500:5500"
-     volumes: 
-       - /oracle-data:/ORCL
-
+     ports: "{{ containers['nginx'].port_mappings }}"
+     volumes: "{{ containers['nginx'].mounts }}"
+ 
 ...
 

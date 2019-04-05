@@ -10,10 +10,10 @@
    roles:
  #  - role: firewall
  #  - role: create_docker_network
-   - role: nginx
-   - role: nexus
+ #  - role: nginx
+ #  - role: nexus
 #   - role: jenkins
-#   - role: oracle
+    - role: oracle
 #   - role: postgresql
 #   - role: sonarqube
 
