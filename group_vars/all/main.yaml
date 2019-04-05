@@ -15,6 +15,12 @@
    - { port: 19000,  proto: tcp, state: enabled }
 
  containers:
+   jenkins:
+     mounts:
+       - /docker-data-jenkins:/var/jenkins_home
+     port_mappings:
+       - "8080:8080"
+       - "50000:50000"
    nginx:
      mounts:
        - /docker-data-nginx/conf.d:/etc/nginx/conf.d
@@ -42,9 +48,9 @@
  nexus_image_name: "sonatype/nexus3"
  oracle_image_name: "store/oracle/database-enterprise:12.2.0.1"
 
- jenkins_mounts:
-   - /docker-data-jenkins
-
+ jenkins_image_name: "jenkins/jenkins"
+ jenkins_admin_username: "{{ jenkins_username }}"
+ jenkins_admin_password: "{{ jenkins_password }}"
 
  sonarqube_mounts:
    - /docker-data-sonarqube/conf
