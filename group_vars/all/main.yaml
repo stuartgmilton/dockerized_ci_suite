@@ -44,7 +44,7 @@
  nexus_image_name: "sonatype/nexus3"
 
  jenkins_image_name: "jenkins/jenkins"
- jenkins_admin_username: "{{ jenkins_admin_usernam }}"
+ jenkins_admin_username: "{{ jenkins_admin_username }}"
  jenkins_admin_password: "{{ jenkins_admin_password }}"
 
  sonarqube_mounts:

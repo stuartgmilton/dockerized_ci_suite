@@ -12,8 +12,8 @@
  #  - role: create_docker_network
  #  - role: nginx
  #  - role: nexus
-#   - role: jenkins
-    - role: oracle
+   - role: jenkins
+#    - role: oracle
 #   - role: postgresql
 #   - role: sonarqube
 
