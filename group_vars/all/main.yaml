@@ -15,6 +15,12 @@
    - { port: 19000,  proto: tcp, state: enabled }
 
  containers:
+   jenkins:
+     mounts:
+       - /docker-data-jenkins:/jenkins-data
+     port_mappings:
+       - "8080:8080"
+       - "50000:50000"
    nginx:
      mounts:
        - /docker-data-nginx/conf.d:/etc/nginx/conf.d
@@ -37,9 +43,7 @@
 
  nexus_image_name: "sonatype/nexus3"
 
- jenkins_mounts:
-   - /docker-data-jenkins
-
+ jenkins_image_name: "jenkins"
 
  sonarqube_mounts:
    - /docker-data-sonarqube/conf

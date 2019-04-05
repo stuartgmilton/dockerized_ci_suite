@@ -2,25 +2,25 @@
 
  - name: pull
    docker_image:
-     name: jenkins 
+     name: "{{jenkins_image_name}}"
 
- - name: Create dir
+ - name: Ensure Jenkins bind mount directories exist
    file:
-     path: /jenkins_home
+     path: "{{ item.split(':')[0] }}"
      state: directory
      recurse: yes
      owner: 1000
+   with_items:
+     - "{{ containers['jenkins'].mounts }}"
 
  - name: Start jenkins docker container
    docker_container:
      name: "jenkins"
-     image: "jenkins"
+     image: "{{jenkins_image_name}}"
      restart_policy: always
-     ports:
-       - "8080:8080"
-       - "50000:50000"
-     volumes: 
-       - /jenkins_home:/var/jenkins_home
+     restart: yes
+     ports: "{{containers['jenkins'].port_mappings}}"
+     volumes: "{{ containers['jenkins'].mounts }}"
 
 ...
 
