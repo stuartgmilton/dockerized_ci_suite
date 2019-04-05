@@ -22,5 +22,14 @@
      ports: "{{containers['jenkins'].port_mappings}}"
      volumes: "{{ containers['jenkins'].mounts }}"
 
+ - name: configure default users
+   template:
+     src: basic-security.groovy
+     dest: "{{ item.split(':')[0] }}/init.groovy.d/basic-security.groovy"
+     owner: 1000
+#     group: "{{ jenkins_group }}"
+     mode: 0775
+   with_items:
+     - "{{ containers['jenkins'].mounts }}"
 ...
 

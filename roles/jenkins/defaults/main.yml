@@ -1,2 +1,6 @@
 ---
-# defaults file for nexus
+
+ jenkins_admin_username: admin
+ jenkins_admin_password: password
+
+...

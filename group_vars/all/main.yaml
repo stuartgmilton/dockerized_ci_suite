@@ -44,6 +44,8 @@
  nexus_image_name: "sonatype/nexus3"
 
  jenkins_image_name: "jenkins"
+ jenkins_admin_username: hdws
+ jenkins_admin_password: hdws
 
  sonarqube_mounts:
    - /docker-data-sonarqube/conf
