@@ -17,7 +17,7 @@
  containers:
    jenkins:
      mounts:
-       - /docker-data-jenkins:/jenkins-data
+       - /docker-data-jenkins:/var/jenkins_home
      port_mappings:
        - "8080:8080"
        - "50000:50000"
@@ -43,7 +43,7 @@
 
  nexus_image_name: "sonatype/nexus3"
 
- jenkins_image_name: "jenkins"
+ jenkins_image_name: "jenkins/jenkins"
  jenkins_admin_username: hdws
  jenkins_admin_password: hdws
 

@@ -6,7 +6,7 @@
 
  - name: Ensure Jenkins bind mount directories exist
    file:
-     path: "{{ item.split(':')[0] }}"
+     path: "{{ item.split(':')[0] }}/init.groovy.d"
      state: directory
      recurse: yes
      owner: 1000
@@ -24,10 +24,9 @@
 
  - name: configure default users
    template:
-     src: basic-security.groovy
+     src: basic-security.groovy.j2
      dest: "{{ item.split(':')[0] }}/init.groovy.d/basic-security.groovy"
      owner: 1000
-#     group: "{{ jenkins_group }}"
      mode: 0775
    with_items:
      - "{{ containers['jenkins'].mounts }}"

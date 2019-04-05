@@ -8,11 +8,11 @@
 #     https_proxy: http://127.0.0.1:3128
 
    roles:
- #  - role: firewall
- #  - role: create_docker_network
-   - role: nginx
-   - role: nexus
-#   - role: jenkins
+   - role: firewall
+   - role: create_docker_network
+#  - role: nginx
+#  - role: nexus
+   - role: jenkins
 #   - role: oracle
 #   - role: postgresql
 #   - role: sonarqube
