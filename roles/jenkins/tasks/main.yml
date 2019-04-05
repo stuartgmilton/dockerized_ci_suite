@@ -21,6 +21,8 @@
      restart: yes
      ports: "{{containers['jenkins'].port_mappings}}"
      volumes: "{{ containers['jenkins'].mounts }}"
+     networks:
+     - name: ci_suite_network
 
  - name: configure default users
    template:

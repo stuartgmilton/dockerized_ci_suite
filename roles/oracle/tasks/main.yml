@@ -24,8 +24,8 @@
      name: "oracle12ee"
      image: "{{oracle_image_name}}" 
      restart_policy: always
-     ports: "{{ containers['nginx'].port_mappings }}"
-     volumes: "{{ containers['nginx'].mounts }}"
+     ports: "{{ containers['oracle'].port_mappings }}"
+     volumes: "{{ containers['oracle'].mounts }}"
  
 ...
 
