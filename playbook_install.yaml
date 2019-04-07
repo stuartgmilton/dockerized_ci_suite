@@ -8,27 +8,27 @@
 #     https_proxy: http://127.0.0.1:3128
 
    roles:
- #  - role: firewall
- #  - role: create_docker_network
-    - role: nginx
- #  - role: nexus
-    - role: jenkins
-#    - role: oracle
-#   - role: postgresql
+   - role: firewall
+   - role: create_docker_network
+   - role: nginx
+   - role: nexus
+   - role: jenkins
+   - role: oracle
+   - role: postgresql
 #   - role: sonarqube
-    - role: nginx_sites
-      vars:
-        application_name: jenkins
-        listening_dns: localhost
-        listening_port: 18080
-        downstream_server_ip: jenkins
-        downstream_server_port: 8080
-        location_config:
-          - "proxy_set_header        Host $host:$server_port;"
-          - "proxy_set_header        X-Real-IP $remote_addr;"
-          - "proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;"
-          - "proxy_set_header        X-Forwarded-Proto $scheme;"
-          - "proxy_read_timeout      90;"
+   - role: nginx_sites
+     vars:
+       application_name: jenkins
+       listening_dns: localhost
+       listening_port: 18080
+       downstream_server_ip: jenkins
+       downstream_server_port: 8080
+       location_config:
+         - "proxy_set_header        Host $host:$server_port;"
+         - "proxy_set_header        X-Real-IP $remote_addr;"
+         - "proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;"
+         - "proxy_set_header        X-Forwarded-Proto $scheme;"
+         - "proxy_read_timeout      90;"
 
 
 
