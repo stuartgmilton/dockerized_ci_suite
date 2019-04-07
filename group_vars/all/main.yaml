@@ -47,22 +47,25 @@
        - /docker-data-postgres:/var/lib/postgresql/data
      port_mappings:
        - "5432:5432"
+   sonarqube:
+     mounts:
+       - /docker-data-sonarqube/conf:/opt/sonarqube/conf
+       - /docker-data-sonarqube/data:/opt/sonarqube/data
+       - /docker-data-sonarqube/logs:/opt/sonarqube/logs
+       - /docker-data-sonarqube/extensions/plugins:/opt/sonarqube/extensions
+     port_mappings:
+       - "9000:9000"
 
 
  nginx_image_name: "nginx"
  nexus_image_name: "sonatype/nexus3"
  oracle_image_name: "store/oracle/database-enterprise:12.2.0.1"
- postgres_image_name : "postgres"
+ postgres_image_name: "postgres"
+ sonarqube_image_name: "sonarqube"
 
  jenkins_image_name: "jenkins/jenkins"
  jenkins_admin_username: "{{ jenkins_username }}"
  jenkins_admin_password: "{{ jenkins_password }}"
-
- sonarqube_mounts:
-   - /docker-data-sonarqube/conf
-   - /docker-data-sonarqube/data
-   - /docker-data-sonarqube/logs
-   - /docker-data-sonarqube/extensions/plugins
 
  all_file_system_mounts:
    - "{{jenkins_mounts}}"

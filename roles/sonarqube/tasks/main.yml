@@ -2,25 +2,22 @@
 
  - name: pull
    docker_image:
-     name:  sonarqube
+     name: "{{sonarqube_image_name}}"
 
  - name: Create dir
    file:
-     path: "{{item}}"
+     path: "{{ item.split(':')[0] }}"
      state: directory
      recurse: yes
      owner: 999
      group: 999
    with_items:
-     - /sonarqube/conf
-     - /sonarqube/data
-     - /sonarqube/logs
-     - /sonarqube/extensions/plugins
+     - "{{ containers['sonarqube'].mounts }}"
 
  - name: Download Plugins
    get_url:
      url: https://github.com/felipebz/sonar-plsql/releases/download/2.2.0/sonar-plsql-open-plugin-2.2.0.jar
-     dest: /sonarqube/extensions/plugins/sonar-plsql-open-plugin-2.2.0.jar
+     dest: /docker-data-sonarqube/extensions/plugins/sonar-plsql-open-plugin-2.2.0.jar
      owner: 999
      group: 999
      timeout: 15
@@ -28,21 +25,16 @@
  - name: Start sonarqube docker container
    docker_container:
      name: "sonarqube"
-     image: "sonarqube"
+     image: "{{sonarqube_image_name}}"
      restart_policy: always
-     ports:
-       - "9000:9000"
+     ports: "{{ containers['sonarqube'].port_mappings }}"
+     volumes: "{{ containers['sonarqube'].mounts }}"
      networks:
-       - name: ci_network
+       - name: "ci_suite_network"
      env:
        SONARQUBE_JDBC_USERNAME: "sonar"
        SONARQUBE_JDBC_PASSWORD: "sonar"
        SONARQUBE_JDBC_URL: "jdbc:postgresql://postgres:5432/sonar"
-     volumes:
-       - /sonarqube/conf:/opt/sonarqube/conf
-       - /sonarqube/data:/opt/sonarqube/data
-       - /sonarqube/logs:/opt/sonarqube/logs
-       - /sonarqube/extensions:/opt/sonarqube/extensions
 
 ...
 

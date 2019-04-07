@@ -15,7 +15,7 @@
    - role: jenkins
    - role: oracle
    - role: postgresql
-#   - role: sonarqube
+   - role: sonarqube
    - role: nginx_sites
      vars:
        application_name: jenkins
