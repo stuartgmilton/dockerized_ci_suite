@@ -2,39 +2,26 @@
 
  - name: pull
    docker_image:
-     name:  postgres
-
-# - name: create postgres group
-#   group:
-#     name: postgres
-#     gid: 1000
-#     state: present
-#
-# - name: create postgres user
-#   user:
-#     name: postgres
-#     uid: 1000
-#     state: present
+     name: "{{postgres_image_name}}"
 
  - name: Create dir
    file:
-     path: /postgres-data
+     path: "{{ item.split(':')[0] }}"
      state: directory
      recurse: yes
      owner: 1000
- #    group: postgres
+   with_items:
+     - "{{ containers['postgres'].mounts }}"
 
  - name: Start postgres docker container
    docker_container:
      name: "postgres"
      image: "postgres"
      restart_policy: always
-     ports:
-       - "5432:5432"
-     volumes: 
-       - /postgres-data:/var/lib/postgresql/data
-     networks:
-       - name: ci_network
+     ports: "{{ containers['postgres'].port_mappings }}"
+     volumes: "{{ containers['postgres'].mounts }}"
+     networks: 
+       - name: ci_suite_network 
      env:
        POSTGRES_USER: "sonar"
        POSTGRES_PASSWORD: "sonar"
