@@ -21,6 +21,9 @@
      restart: yes
      ports: "{{containers['nexus'].port_mappings}}"
      volumes: "{{containers['nexus'].mounts}}"
+     networks:
+     - name: ci_suite_network
+
 
 ...
 

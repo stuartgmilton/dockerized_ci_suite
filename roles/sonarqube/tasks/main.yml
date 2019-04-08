@@ -30,7 +30,7 @@
      ports: "{{ containers['sonarqube'].port_mappings }}"
      volumes: "{{ containers['sonarqube'].mounts }}"
      networks:
-       - name: "ci_suite_network"
+       - name: ci_suite_network
      env:
        SONARQUBE_JDBC_USERNAME: "sonar"
        SONARQUBE_JDBC_PASSWORD: "sonar"

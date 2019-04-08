@@ -5,13 +5,8 @@
 
  firewall_ports:
    - { service: ssh, state: enabled }
-   - { service: http, state: enabled }
    - { service: https, state: enabled }
-   - { port: 8080,  proto: tcp, state: enabled }
-   - { port: 8081,  proto: tcp, state: enabled }
-   - { port: 9000,  proto: tcp, state: enabled }
    - { port: 18080,  proto: tcp, state: enabled }
-   - { port: 18081,  proto: tcp, state: enabled }
    - { port: 19000,  proto: tcp, state: enabled }
 
  containers:

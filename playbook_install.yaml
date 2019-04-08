@@ -13,7 +13,7 @@
    - role: nginx
    - role: nexus
    - role: jenkins
-   - role: oracle
+#   - role: oracle
    - role: postgresql
    - role: sonarqube
    - role: nginx_sites
@@ -29,14 +29,31 @@
          - "proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;"
          - "proxy_set_header        X-Forwarded-Proto $scheme;"
          - "proxy_read_timeout      90;"
+   - role: nginx_sites
+     vars:
+       application_name: nexus3
+       listening_dns: localhost
+       listening_port: 443
+       downstream_server_ip: nexus3
+       downstream_server_port: 8081
+       server_config:
+         - "client_max_body_size 1G;"
+       location_config:
+         - "proxy_set_header Host $host;"
+         - "proxy_set_header X-Real-IP $remote_addr;"
+         - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+         - ""
+   - role: nginx_sites
+     vars:
+       application_name: sonarqube
+       listening_dns: localhost
+       listening_port: 19000
+       downstream_server_ip: sonarqube
+       downstream_server_port: 9000
 
 
 
-# create nexus and add to network if defined
-# create jenkins and add to network if defined
-# create sonarqube & postgres and add to network if defined
-# create oracle image and add to network if defined
-# change jenkins initial password
+
 # Create manual jenkins job to confirm that jenkins can talk to sonarqube / nexus / oracle
 
 # create jenkins job via curl/rest api - Job should be a jobdsl job that literally uses a jenkinsfile from a github repo
