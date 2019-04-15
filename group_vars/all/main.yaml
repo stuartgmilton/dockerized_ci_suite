@@ -7,6 +7,7 @@
    - { service: ssh, state: enabled }
    - { service: https, state: enabled }
    - { port: 18080,  proto: tcp, state: enabled }
+   - { port: 18081,  proto: tcp, state: enabled }
    - { port: 19000,  proto: tcp, state: enabled }
 
  containers:
@@ -20,8 +21,6 @@
      mounts:
        - /docker-data-nginx/conf.d:/etc/nginx/conf.d
      port_mappings:
-       - "80:80"
-       - "443:443"
        - "18080:18080"
        - "18081:18081"
        - "19000:19000"

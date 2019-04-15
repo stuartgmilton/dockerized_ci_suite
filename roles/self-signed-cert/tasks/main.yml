@@ -1,0 +1,23 @@
+---
+
+ - name: CA | Generate Private Key
+   openssl_privatekey:
+     path: "/tmp/{{ CACommonName }}.pem"
+
+ - name: CA | Generate Certificate Signing Request
+   shell: "openssl req -new -key /tmp/{{ CACommonName }}.pem -out /tmp/{{ CACommonName }}.csr -subj '/CN={{ CACommonName }}'"
+
+ - name: CA | Generate Self Signed Certificate
+   shell: "openssl x509 -signkey /tmp/{{ CACommonName }}.pem -in /tmp/{{ CACommonName }}.csr -req -days 365 -out /tmp/{{ CACommonName }}.crt"
+
+ - name: Child Cert| Generate Private Key
+   openssl_privatekey:
+     path: "/tmp/{{ CommonName }}.pem"
+
+ - name: Child Cert | Generate Certificate Signing Request
+   shell: "openssl req -new -key /tmp/{{ CommonName }}.pem -out /tmp/{{ CommonName }}.csr -subj '/CN={{ CommonName }}'"
+
+ - name: Child Cert | Generate Self Signed Certificate
+   shell: "openssl x509 -signkey /tmp/{{ CACommonName }}.pem -in /tmp/{{ CommonName }}.csr -req -days 365 -out /tmp/{{ CommonName }}.crt"
+
+...

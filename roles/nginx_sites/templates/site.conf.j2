@@ -1,7 +1,10 @@
 server {
-  listen   *:{{ listening_port }};
+  listen   {{ listening_port }} ssl;
   server_name  {{ listening_dns }};
   
+  ssl_certificate_key ./conf.d/{{CACommonName}}.pem;
+  ssl_certificate     ./conf.d/{{CommonName}}.crt;
+ 
   {% for config in server_config %}
   {{ config }}
   {% endfor %}
