@@ -8,7 +8,7 @@
  downstream_server_ip: 99.99.99.99
  downstream_server_port: 8080
 
- location_config: "##"
- server_config: "##"
+ location_config: ""
+ server_config: ""
  
 ...

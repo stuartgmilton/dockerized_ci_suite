@@ -7,12 +7,17 @@
    - { service: ssh, state: enabled }
    - { service: https, state: enabled }
    - { port: 18080,  proto: tcp, state: enabled }
+   - { port: 18081,  proto: tcp, state: enabled }
    - { port: 19000,  proto: tcp, state: enabled }
 
  containers:
    jenkins:
      mounts:
        - /docker-data-jenkins:/var/jenkins_home
+       - /docker-data-oracle/oradata:/tmp/oradata
+       - /docker-data-oracle-reference/oradata:/tmp/oradataref
+     mount_files:
+       - /var/run/docker.sock:/var/run/docker.sock
      port_mappings:
        - "8080:8080"
        - "50000:50000"
@@ -20,8 +25,6 @@
      mounts:
        - /docker-data-nginx/conf.d:/etc/nginx/conf.d
      port_mappings:
-       - "80:80"
-       - "443:443"
        - "18080:18080"
        - "18081:18081"
        - "19000:19000"

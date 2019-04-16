@@ -8,50 +8,58 @@
 #     https_proxy: http://127.0.0.1:3128
 
    roles:
-   - role: firewall
-   - role: create_docker_network
-   - role: nginx
-   - role: nexus
+#   - role: firewall
+#   - role: create_docker_network
+#   - role: self-signed-cert
+#   - role: nginx
+#   - role: nexus
    - role: jenkins
 #   - role: oracle
-   - role: postgresql
-   - role: sonarqube
-   - role: nginx_sites
-     vars:
-       application_name: jenkins
-       listening_dns: localhost
-       listening_port: 18080
-       downstream_server_ip: jenkins
-       downstream_server_port: 8080
-       location_config:
-         - "proxy_set_header        Host $host:$server_port;"
-         - "proxy_set_header        X-Real-IP $remote_addr;"
-         - "proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;"
-         - "proxy_set_header        X-Forwarded-Proto $scheme;"
-         - "proxy_read_timeout      90;"
-   - role: nginx_sites
-     vars:
-       application_name: nexus3
-       listening_dns: localhost
-       listening_port: 443
-       downstream_server_ip: nexus3
-       downstream_server_port: 8081
-       server_config:
-         - "client_max_body_size 1G;"
-       location_config:
-         - "proxy_set_header Host $host;"
-         - "proxy_set_header X-Real-IP $remote_addr;"
-         - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
-         - ""
-   - role: nginx_sites
-     vars:
-       application_name: sonarqube
-       listening_dns: localhost
-       listening_port: 19000
-       downstream_server_ip: sonarqube
-       downstream_server_port: 9000
+#   - role: postgresql
+#   - role: sonarqube
+
+#   - role: nginx_sites
+#     vars:
+#       application_name: jenkins
+#       listening_dns: localhost
+#       listening_port: 18080
+#       downstream_server_ip: jenkins
+#       downstream_server_port: 8080
+#       server_config: ""
+#       location_config:
+#         - "proxy_set_header        Host $host:$server_port;"
+#         - "proxy_set_header        X-Real-IP $remote_addr;"
+#         - "proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;"
+#         - "proxy_set_header        X-Forwarded-Proto $scheme;"
+#         - "proxy_redirect          http:// https://;"
+#         - "proxy_http_version      1.1;"
+#         - "proxy_request_buffering off;"
+#         - "proxy_buffering         off;"
 
 
+#   - role: nginx_sites
+#     vars:
+#       application_name: nexus3
+#       listening_dns: localhost
+#       listening_port: 18081
+#       downstream_server_ip: nexus3
+#       downstream_server_port: 8081
+#       server_config:
+#         - "client_max_body_size 1G;"
+#       location_config:
+#         - "proxy_set_header Host $host;"
+#         - "proxy_set_header X-Real-IP $remote_addr;"
+#         - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+
+#   - role: nginx_sites
+#     vars:
+#       application_name: sonarqube
+#       listening_dns: localhost
+#       listening_port: 19000
+#       downstream_server_ip: sonarqube
+#       downstream_server_port: 9000
+#       location_config: ""
+#       server_config: ""
 
 
 # Create manual jenkins job to confirm that jenkins can talk to sonarqube / nexus / oracle
