@@ -13,6 +13,15 @@
    with_items:
      - "{{ containers['jenkins'].mounts }}"
 
+ - name: Ensure Jenkins Docker mount exist
+   file:
+     path: "{{ item.split(':')[0] }}"
+     state: file
+     owner: 1000
+   with_items:
+     - "{{ containers['jenkins'].mount_files }}"
+
+
  - name: Start jenkins docker container
    docker_container:
      name: "jenkins"
