@@ -1,8 +1,18 @@
 ---
 
- - name: pull
+# - name: pull
+#   docker_image:
+#     name: "{{jenkins_image_name}}"
+
+
+ - name: Build an image and push it to a private repo
    docker_image:
-     name: "{{jenkins_image_name}}"
+    # path: /home/ec2-user/stuart/dockerized_ci_suite/roles/jenkins/files/docker
+     path: "{{ role_path }}/files/docker"
+     name: jenkins-docker
+     state: present
+     force: true
+
 
  - name: Ensure Jenkins bind mount directories exist
    file:
@@ -25,11 +35,12 @@
  - name: Start jenkins docker container
    docker_container:
      name: "jenkins"
-     image: "{{jenkins_image_name}}"
+     #image: "{{jenkins_image_name}}"
+     image: jenkins-docker 
      restart_policy: always
      restart: yes
      ports: "{{containers['jenkins'].port_mappings}}"
-     volumes: "{{ containers['jenkins'].mounts }}"
+     volumes: "{{ containers['jenkins'].blobby }}"
      networks:
      - name: ci_suite_network
 

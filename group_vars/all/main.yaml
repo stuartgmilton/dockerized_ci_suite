@@ -18,6 +18,12 @@
        - /docker-data-oracle-reference/oradata:/tmp/oradataref
      mount_files:
        - /var/run/docker.sock:/var/run/docker.sock
+     blobby:
+       - /docker-data-jenkins:/var/jenkins_home
+       - /docker-data-oracle/oradata:/tmp/oradata
+       - /docker-data-oracle-reference/oradata:/tmp/oradataref
+       - /var/run/docker.sock:/var/run/docker.sock
+
      port_mappings:
        - "8080:8080"
        - "50000:50000"
@@ -64,12 +70,5 @@
  jenkins_image_name: "jenkins/jenkins"
  jenkins_admin_username: "{{ jenkins_username }}"
  jenkins_admin_password: "{{ jenkins_password }}"
-
- all_file_system_mounts:
-   - "{{jenkins_mounts}}"
-   - "{{nexus_mounts}}"
-   - "{{nexus_mounts}}"
-   - "{{oracle_mounts}}"
-   - "{{postgres_mounts}}"
 
 ...
