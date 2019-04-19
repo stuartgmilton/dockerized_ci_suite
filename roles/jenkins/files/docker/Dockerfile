@@ -4,7 +4,6 @@ USER root
 RUN  curl -fsSL get.docker.com -o get-docker.sh && \
      sh get-docker.sh && \
      apt-get install -y zip && \
-     apt-get install -y which && \
      usermod -aG docker jenkins
 
 USER jenkins
