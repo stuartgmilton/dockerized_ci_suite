@@ -18,12 +18,11 @@
        - /docker-data-oracle-reference/oradata:/tmp/oradataref
      mount_files:
        - /var/run/docker.sock:/var/run/docker.sock
-     blobby:
+     all_mounts:
        - /docker-data-jenkins:/var/jenkins_home
        - /docker-data-oracle/oradata:/tmp/oradata
        - /docker-data-oracle-reference/oradata:/tmp/oradataref
        - /var/run/docker.sock:/var/run/docker.sock
-
      port_mappings:
        - "8080:8080"
        - "50000:50000"
