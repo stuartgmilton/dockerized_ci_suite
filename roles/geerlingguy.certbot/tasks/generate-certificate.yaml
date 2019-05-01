@@ -1,0 +1,25 @@
+---
+
+ - name: Check if cert already exists.
+   stat:
+     path: "{{certbot_default_directory}}/{{ item.domains | first | replace('*.', '') }}/cert.pem"
+   register: lets_encrypt_certificate
+
+# - name: Stop NGinx if cert doesn;t exist
+#   service:
+#     name: nginx
+#     state: stopped
+#   when: not lets_encrypt_certificate.stat.exists
+
+ - name: Generate new cert if one doesn;t exist.
+   shell: "{{ certbot_create_command }}"
+   when: not lets_encrypt_certificate.stat.exists
+
+# - name: Start NGinx after cert has been generated.
+#   service:
+#     name: nginx
+#     state: started
+#   when: not lets_encrypt_certificate.stat.exists
+
+...
+

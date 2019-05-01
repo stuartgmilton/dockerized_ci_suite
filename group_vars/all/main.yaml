@@ -5,6 +5,7 @@
 
  firewall_ports:
    - { service: ssh, state: enabled }
+   - { service: http, state: enabled }
    - { service: https, state: enabled }
    - { port: 18080,  proto: tcp, state: enabled }
    - { port: 18081,  proto: tcp, state: enabled }
@@ -25,6 +26,7 @@
      mounts:
        - /docker-data-nginx/conf.d:/etc/nginx/conf.d
      port_mappings:
+       - "443:443"
        - "18080:18080"
        - "18081:18081"
        - "19000:19000"
@@ -71,5 +73,10 @@
    - "{{nexus_mounts}}"
    - "{{oracle_mounts}}"
    - "{{postgres_mounts}}"
+
+ enable_certbot_repos:
+  - "rhui-REGION-rhel-server-extras"
+  - "rhui-REGION-rhel-server-optional"
+
 
 ...

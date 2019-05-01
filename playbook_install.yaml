@@ -8,15 +8,16 @@
 #     https_proxy: http://127.0.0.1:3128
 
    roles:
-#   - role: firewall
+   - role: firewall
 #   - role: create_docker_network
 #   - role: self-signed-cert
-#   - role: nginx
+   - role: nginx
 #   - role: nexus
-   - role: jenkins
+#   - role: jenkins
 #   - role: oracle
 #   - role: postgresql
 #   - role: sonarqube
+   - role: geerlingguy.certbot
 
 #   - role: nginx_sites
 #     vars:
