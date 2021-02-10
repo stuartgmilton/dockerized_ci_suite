@@ -1,8 +1,8 @@
 ---
 
- - name: pull
-   docker_image:
-     name: "{{jenkins_image_name}}"
+# - name: pull
+#   docker_image:
+#     name: "{{jenkins_image_name}}"
 
  - name: Ensure Jenkins bind mount directories exist
    file:
@@ -29,16 +29,16 @@
      restart_policy: always
      restart: yes
      ports: "{{containers['jenkins'].port_mappings}}"
-     volumes: "{{ containers['jenkins'].mounts }}"
+     volumes: "{{ containers['jenkins'].all_mounts }}"
      networks:
      - name: ci_suite_network
 
- - name: configure default users
-   template:
-     src: basic-security.groovy.j2
-     dest: "{{ item.split(':')[0] }}/init.groovy.d/basic-security.groovy"
-     owner: 1000
-     mode: 0775
-   with_items:
-     - "{{ containers['jenkins'].mounts }}"
+# - name: configure default users
+#   template:
+#     src: basic-security.groovy.j2
+#     dest: "{{ item.split(':')[0] }}/init.groovy.d/basic-security.groovy"
+#     owner: 1000
+#     mode: 0775
+#   with_items:
+#     - "{{ containers['jenkins'].mounts }}"
 ...

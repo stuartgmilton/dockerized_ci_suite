@@ -20,6 +20,10 @@
   - email: stuart.milton@atos.net
     domains:
       - quality-hdws.nsandi.com
+  - email: stuart.milton@atos.net
+    domains:
+      - registry-hdws.nsandi.com
+
 
  certbot_create_command: "certbot certonly --standalone --noninteractive --agree-tos --expand --config-dir '{{certbot_default_directory}}' --email {{ item.email }} -d {{ item.domains | join(',') }}"
 

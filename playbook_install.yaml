@@ -3,21 +3,17 @@
  - hosts: all
    become: true
 
-#   environment:
-#     http_proxy: http://127.0.0.1:3128
-#     https_proxy: http://127.0.0.1:3128
-
    roles:
-   - role: firewall
+#   - role: firewall
 #   - role: create_docker_network
 #   - role: self-signed-cert
-   - role: nginx
+#   - role: nginx
 #   - role: nexus
-#   - role: jenkins
+   - role: jenkins
 #   - role: oracle
 #   - role: postgresql
 #   - role: sonarqube
-   - role: certbot
+#   - role: certbot
 
 #   - role: nginx_sites
 #     vars:
@@ -55,12 +51,23 @@
 #   - role: nginx_sites
 #     vars:
 #       application_name: sonarqube
-#       listening_dns: localhost
-#       listening_port: 19000
+#       listening_dns: quality-hdws.nsandi.com
+#       listening_port: 443
 #       downstream_server_ip: sonarqube
 #       downstream_server_port: 9000
 #       location_config: ""
 #       server_config: ""
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Create manual jenkins job to confirm that jenkins can talk to sonarqube / nexus / oracle

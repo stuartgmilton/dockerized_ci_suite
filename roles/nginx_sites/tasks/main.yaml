@@ -1,20 +1,20 @@
 ---
 
- - name: Copy CA key into place
-   copy:
-     src: "/tmp/{{CACommonName}}.pem"
-     dest: "/docker-data-nginx/conf.d/{{CACommonName}}.pem"
-     owner: root
-     group: root
-     mode: '0640'
+# - name: Copy CA key into place
+#   copy:
+#     src: "/tmp/{{CACommonName}}.pem"
+#     dest: "/docker-data-nginx/conf.d/{{CACommonName}}.pem"
+#     owner: root
+#     group: root
+#     mode: '0640'
 
- - name: Copy Server Cert into place
-   copy:
-     src: "/tmp/{{CommonName}}.crt"
-     dest: "/docker-data-nginx/conf.d/{{CommonName}}.crt"
-     owner: root
-     group: root
-     mode: '0640'
+# - name: Copy Server Cert into place
+#   copy:
+#     src: "/tmp/{{CommonName}}.crt"
+#     dest: "/docker-data-nginx/conf.d/{{CommonName}}.crt"
+#     owner: root
+#     group: root
+#     mode: '0640'
 
  - name: Add conf file to Proxy
    template:
