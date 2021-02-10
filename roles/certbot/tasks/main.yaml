@@ -1,0 +1,15 @@
+---
+
+ - name: Install Certbot.
+   yum: 
+     name: certbot
+     state: present
+     enablerepo: "{{enable_certbot_repos}}"
+
+
+ - include_tasks: generate-certificate.yaml
+   with_items: "{{ certbot_certs }}"
+
+ - import_tasks: renew-cron.yml
+
+...

@@ -5,10 +5,12 @@
 
  firewall_ports:
    - { service: ssh, state: enabled }
+   - { service: http, state: enabled }
    - { service: https, state: enabled }
    - { port: 18080,  proto: tcp, state: enabled }
    - { port: 18081,  proto: tcp, state: enabled }
    - { port: 19000,  proto: tcp, state: enabled }
+   - { port: 18083,  proto: tcp, state: enabled }
 
  containers:
    jenkins:
@@ -16,12 +18,14 @@
        - /docker-data-jenkins:/var/jenkins_home
        - /docker-data-oracle/oradata:/tmp/oradata
        - /docker-data-oracle-reference/oradata:/tmp/oradataref
+       - /docker-data-python:/tmp/python
      mount_files:
        - /var/run/docker.sock:/var/run/docker.sock
      all_mounts:
        - /docker-data-jenkins:/var/jenkins_home
        - /docker-data-oracle/oradata:/tmp/oradata
        - /docker-data-oracle-reference/oradata:/tmp/oradataref
+       - /docker-data-python:/tmp/python
        - /var/run/docker.sock:/var/run/docker.sock
      port_mappings:
        - "8080:8080"
@@ -30,6 +34,7 @@
      mounts:
        - /docker-data-nginx/conf.d:/etc/nginx/conf.d
      port_mappings:
+       - "443:443"
        - "18080:18080"
        - "18081:18081"
        - "19000:19000"
@@ -66,8 +71,12 @@
  postgres_image_name: "postgres"
  sonarqube_image_name: "sonarqube"
 
- jenkins_image_name: "jenkins/jenkins"
+ jenkins_image_name: "jenkins-docker" #"jenkins/jenkins"
  jenkins_admin_username: "{{ jenkins_username }}"
  jenkins_admin_password: "{{ jenkins_password }}"
+
+ enable_certbot_repos:
+  - "rhui-REGION-rhel-server-extras"
+  - "rhui-REGION-rhel-server-optional"
 
 ...

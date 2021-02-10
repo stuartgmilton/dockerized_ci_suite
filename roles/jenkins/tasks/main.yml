@@ -35,7 +35,7 @@
      restart_policy: always
      restart: yes
      ports: "{{containers['jenkins'].port_mappings}}"
-     volumes: "{{ containers['jenkins'].all_mounts}}"
+     volumes: "{{ containers['jenkins'].all_mounts }}"
      networks:
      - name: ci_suite_network
 
