@@ -25,7 +25,10 @@
        - /docker-data-jenkins:/var/jenkins_home
        - /docker-data-oracle/oradata:/tmp/oradata
        - /docker-data-oracle-reference/oradata:/tmp/oradataref
+<<<<<<< HEAD
        - /docker-data-python:/tmp/python
+=======
+>>>>>>> 5a450230c2c7689c8d29c55e6dbe3e35f84bc080
        - /var/run/docker.sock:/var/run/docker.sock
      port_mappings:
        - "8080:8080"
@@ -75,16 +78,8 @@
  jenkins_admin_username: "{{ jenkins_username }}"
  jenkins_admin_password: "{{ jenkins_password }}"
 
- all_file_system_mounts:
-   - "{{jenkins_mounts}}"
-   - "{{nexus_mounts}}"
-   - "{{nexus_mounts}}"
-   - "{{oracle_mounts}}"
-   - "{{postgres_mounts}}"
-
  enable_certbot_repos:
   - "rhui-REGION-rhel-server-extras"
   - "rhui-REGION-rhel-server-optional"
-
 
 ...

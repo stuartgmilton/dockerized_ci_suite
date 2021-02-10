@@ -1,8 +1,14 @@
 ---
 
-# - name: pull
-#   docker_image:
-#     name: "{{jenkins_image_name}}"
+---
+
+ - name: Build an image and push it to a private repo
+   docker_image:
+     path: "{{ role_path }}/files/docker"
+     name: jenkins-docker
+     state: present
+     force: true
+
 
  - name: Ensure Jenkins bind mount directories exist
    file:
@@ -25,7 +31,7 @@
  - name: Start jenkins docker container
    docker_container:
      name: "jenkins"
-     image: "{{jenkins_image_name}}"
+     image: jenkins-docker 
      restart_policy: always
      restart: yes
      ports: "{{containers['jenkins'].port_mappings}}"
@@ -33,12 +39,13 @@
      networks:
      - name: ci_suite_network
 
-# - name: configure default users
-#   template:
-#     src: basic-security.groovy.j2
-#     dest: "{{ item.split(':')[0] }}/init.groovy.d/basic-security.groovy"
-#     owner: 1000
-#     mode: 0775
-#   with_items:
-#     - "{{ containers['jenkins'].mounts }}"
+ - name: configure default users
+   template:
+     src: basic-security.groovy.j2
+     dest: "{{ item.split(':')[0] }}/init.groovy.d/basic-security.groovy"
+     owner: 1000
+     mode: 0775
+   with_items:
+     - "{{ containers['jenkins'].mounts }}"
+
 ...
